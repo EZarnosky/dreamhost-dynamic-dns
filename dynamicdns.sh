@@ -220,7 +220,10 @@ if [ -n $OPTIP ]; then
 	if [ $VERBOSE = "true" ]; then
 		echo "No IP Address provided, obtaining public IP"
 	fi
-	IP=$(eval "dig +short myip.opendns.com @resolver1.opendns.com")
+	# Applying fix identified by Impulse 0022 in post:
+	# https://github.com/clempaul/dreamhost-dynamic-dns/issues/3
+	# IP=$(eval "dig +short myip.opendns.com @resolver1.opendns.com") #OLD
+	IP=$(eval "wget http://ipecho.net/plain -O- -q")
 	if [ $? -ne 0 ]; then
 		logStatus "error" "Failed to obtain current IP address"
 		exit 3
