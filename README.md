@@ -32,11 +32,11 @@ The script can be run using either command line options or a configuration file.
 
 __SYNOPSIS__
 
-__dynamicdns.bash__ \[-Sd\]\[-k API Key\] \[-r Record\] \[-i New IP Address\] \[-L Logging (true/false)\]
+__dream-ddns.sh__ \[-Sd\]\[-k API Key\] \[-r Record\] \[-i New IP Address\] \[-L Logging (true/false)\]
 
 __DESCRIPTION__
   
-The __dynamicdns.bash__ utility reads a configuration file or command-line options to update DNS records for a Dreamhost account.  Options provided at the command line override any options specified within the configuration file.
+The __dream-ddns.sh__ utility reads a configuration file or command-line options to update DNS records for a Dreamhost account.  Options provided at the command line override any options specified within the configuration file.
   
 The options are as follows:
   
@@ -62,7 +62,7 @@ __RUNNING WITH CRON__
 
 You can easily add this to your crontab with an entry like
 
- 	@hourly ~/bin/dreamhost-dynamic-dns/dynamicdns.bash
+ 	@hourly ~/bin/dreamhost-dynamic-dns/dream-ddns.sh
 
 TODO
 ----
