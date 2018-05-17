@@ -12,7 +12,7 @@
 # See LICENSE for more details.
 
 function usage {
-	echo 'usage:   dynamicdns.bash [-Sdv][-k API Key] [-r Record] [-i New IP Address] [-L Logging (true/false)]'
+	echo 'usage:   dream-ddns.sh [-Sdv][-k API Key] [-r Record] [-i New IP Address] [-L Logging (true/false)]'
 }
 
 function createConfigurationFile {
@@ -51,7 +51,7 @@ RECORD=
 	  
 LOGGING=true
 
-' >> $HOME/.config/dynamicdns
+' >> $HOME/.config/dream-ddns
 
 return 0
 }
@@ -61,36 +61,36 @@ function logStatus {
 	local MESSAGE=$2
 	if [ $LOGGING = "true" ]; then
 		if [ $LEVEL = "error" ]; then
-			logger -p syslog.err -t "dynamicdns.bash" "$MESSAGE"
+			logger -p syslog.err -t "dream-ddns.sh" "$MESSAGE"
 		elif [ $LEVEL = "notice" ]; then
-			logger -p syslog.notice -t "dynamicdns.bash" "$MESSAGE"
+			logger -p syslog.notice -t "dream-ddns.sh" "$MESSAGE"
 		elif [ $LEVEL = "alert" ]; then
-			logger -p syslog.alert -t "dynamicdns.bash" "$MESSAGE"
+			logger -p syslog.alert -t "dream-ddns.sh" "$MESSAGE"
 		fi
 	fi
 	if [ $VERBOSE = "true" ]; then
-		echo "dynamicdns.bash $MESSAGE"
+		echo "dream-ddns.sh $MESSAGE"
 	fi
 	return 0
 }
 
 function saveConfiguration {
 	if [ -n "$1" ]; then
-		sed -i "" -e "s/^KEY=.*$/KEY=$1/" $HOME/.config/dynamicdns
+		sed -i "" -e "s/^KEY=.*$/KEY=$1/" $HOME/.config/dream-ddns
 		if [ $VERBOSE = "true" ]; then
 			echo "Saving KEY to configuration file"
 		fi
 	fi
 
 	if [ -n "$2" ]; then
-		sed -i "" -e "s/^RECORD=.*$/RECORD=$2/" $HOME/.config/dynamicdns
+		sed -i "" -e "s/^RECORD=.*$/RECORD=$2/" $HOME/.config/dream-ddns
 		if [ $VERBOSE = "true" ]; then
 			echo "Saving RECORD to configuration file"
 		fi
 		
 	fi
 	if [ -n "$3" ]; then
-		sed -i "" -e "s/^LOGGING=.*$/LOGGING=$3/" $HOME/.config/dynamicdns
+		sed -i "" -e "s/^LOGGING=.*$/LOGGING=$3/" $HOME/.config/dream-ddns
 		if [ $VERBOSE = "true" ]; then
 			echo "Saving LOGGING to configuration file"
 		fi
@@ -155,14 +155,14 @@ done
 
 #Check for Configuration File
 
-if [ ! -f ~/.config/dynamicdns ]; then
+if [ ! -f ~/.config/dream-ddns ]; then
 	logStatus "notice" "Configuration File Not Found. Creating new configuration file."
 	createConfigurationFile
 fi
 
 # Load Configuration File
 
-source ~/.config/dynamicdns
+source ~/.config/dream-ddns
 
 # check for dependencies, if wget not available, test for curl, set variable to be used to test this later
 if command -v wget >/dev/null 2>&1; then
@@ -182,7 +182,7 @@ fi
 
 if [ ! -n "$OPTKEY" ]; then
 	if [ ! -n "$KEY" ]; then
-		echo "dynamicdns.bash: missing parameter -- KEY"
+		echo "dream-ddns.sh: missing parameter -- KEY"
 		logStatus "error" "Missing Parameter -- KEY"
 		usage
 		exit 1
@@ -192,7 +192,7 @@ fi
 
 if [ ! -n "$OPTRECORD" ]; then
 	if [ ! -n "$RECORD" ]; then
-		echo "dynamicdns.bash: missing parameter -- RECORD"
+		echo "dream-ddns.sh: missing parameter -- RECORD"
 		logStatus "error" "Missing Parameter -- RECORD"
 		usage
  	exit 1
